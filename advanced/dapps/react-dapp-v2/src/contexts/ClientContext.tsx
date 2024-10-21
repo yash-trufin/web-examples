@@ -18,7 +18,6 @@ import {
 
 import { getAppMetadata, getSdkError } from "@walletconnect/utils";
 import {
-  DEFAULT_APP_METADATA,
   DEFAULT_LOGGER,
   DEFAULT_PROJECT_ID,
   DEFAULT_RELAY_URL,
@@ -163,6 +162,8 @@ export function ClientContextProvider({
           optionalNamespaces,
         });
 
+        console.log({ uri, approval });
+
         // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
         if (uri) {
           // Create a flat array of all requested chains across namespaces.
@@ -170,6 +171,7 @@ export function ClientContextProvider({
             .map((namespace) => namespace.chains)
             .flat() as string[];
 
+          console.log({ standaloneChains });
           web3Modal.openModal({ uri, standaloneChains });
         }
 

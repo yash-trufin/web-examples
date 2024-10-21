@@ -1,8 +1,6 @@
 import axios, { AxiosInstance } from "axios";
-import { apiGetKadenaAccountBalance } from "./kadena";
 
 import { AssetData } from "./types";
-import { PactCommand } from "@kadena/client";
 
 export type RpcProvidersByChainId = Record<
   number,
@@ -146,14 +144,7 @@ export async function apiGetAccountBalance(
   address: string,
   chainId: string
 ): Promise<AssetData> {
-  const [namespace, networkId] = chainId.split(":");
-
-  if (namespace === "kadena") {
-    return apiGetKadenaAccountBalance(
-      address,
-      networkId as PactCommand["networkId"]
-    );
-  }
+  const [namespace] = chainId.split(":");
 
   if (namespace !== "eip155") {
     return { balance: "", symbol: "", name: "" };
