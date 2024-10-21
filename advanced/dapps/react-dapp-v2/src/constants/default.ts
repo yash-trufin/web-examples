@@ -42,22 +42,6 @@ export const DEFAULT_APP_METADATA = {
 };
 
 /**
- * EIP5792
- */
-
-export type SendCallsParams = {
-  version: string;
-  chainId: `0x${string}`; // Hex chain id
-  from: `0x${string}`;
-  calls: {
-    to?: `0x${string}` | undefined;
-    data?: `0x${string}` | undefined;
-    value?: `0x${string}` | undefined; // Hex value
-  }[];
-  capabilities?: Record<string, any> | undefined;
-};
-
-/**
  * NEAR
  */
 export enum DEFAULT_NEAR_METHODS {

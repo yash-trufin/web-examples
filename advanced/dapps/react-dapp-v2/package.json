@@ -20,8 +20,6 @@
     "axios": "^1.0.0",
     "blockies-ts": "^1.0.0",
     "bs58": "^5.0.0",
-    "eth-sig-util": "^2.5.3",
-    "ethereumjs-util": "^7.0.6",
     "ethers": "^5.3.0",
     "fp-ts": "^2.13.1",
     "next": "12.2.4",
@@ -35,7 +33,6 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
-    "@types/eth-sig-util": "^2.1.1",
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.14",
     "@types/pino": "^7.0.5",
