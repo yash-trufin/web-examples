@@ -116,18 +116,6 @@ const Home: NextPage = () => {
     closeModal();
   }, [disconnect]);
 
-  async function emit() {
-    if (typeof client === "undefined") {
-      throw new Error("WalletConnect is not initialized");
-    }
-
-    await client.emit({
-      topic: session?.topic || "",
-      event: { name: "chainChanged", data: {} },
-      chainId: "eip155:5",
-    });
-  }
-
   const getNearActions = (): AccountAction[] => {
     const onSignAndSendTransaction = async (
       chainId: string,
@@ -284,7 +272,6 @@ const Home: NextPage = () => {
           ping={onPing}
           disconnect={onDisconnect}
           session={session}
-          emit={emit}
         />
         <SContent>{isInitializing ? "Loading..." : renderContent()}</SContent>
       </Column>
