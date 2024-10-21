@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import Banner from "../components/Banner";
