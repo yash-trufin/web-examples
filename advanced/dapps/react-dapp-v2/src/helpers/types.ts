@@ -16,26 +16,6 @@ export interface ChainsMap {
   [reference: string]: ChainData;
 }
 
-export interface GasPrice {
-  time: number;
-  price: number;
-}
-
-export interface MethodArgument {
-  type: string;
-}
-
-export interface Method {
-  signature: string;
-  name: string;
-  args: MethodArgument[];
-}
-
-export interface ChainRequestRender {
-  label: string;
-  value: string;
-}
-
 export interface ChainMetadata {
   name?: string;
   logo: string;

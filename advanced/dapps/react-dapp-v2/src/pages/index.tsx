@@ -268,11 +268,7 @@ const Home: NextPage = () => {
   return (
     <SLayout>
       <Column maxWidth={1000} spanHeight>
-        <Header
-          ping={onPing}
-          disconnect={onDisconnect}
-          session={session}
-        />
+        <Header ping={onPing} disconnect={onDisconnect} session={session} />
         <SContent>{isInitializing ? "Loading..." : renderContent()}</SContent>
       </Column>
       <Modal show={!!modal} closeModal={closeModal}>

@@ -1,11 +1,4 @@
-import { JsonRpcRequest } from "@walletconnect/jsonrpc-utils";
-
-import {
-  NamespaceMetadata,
-  ChainMetadata,
-  ChainRequestRender,
-  ChainsMap,
-} from "../helpers";
+import { NamespaceMetadata, ChainMetadata, ChainsMap } from "../helpers";
 
 export const NearMetadata: NamespaceMetadata = {
   testnet: {
@@ -31,16 +24,4 @@ export function getChainMetadata(chainId: string): ChainMetadata {
     throw new Error(`No chain metadata found for chainId: ${chainId}`);
   }
   return metadata;
-}
-
-export function getChainRequestRender(
-  request: JsonRpcRequest
-): ChainRequestRender[] {
-  return [
-    { label: "Method", value: request.method },
-    {
-      label: "params",
-      value: JSON.stringify(request.params, null, "\t"),
-    },
-  ];
 }
