@@ -4,7 +4,6 @@ import { Web3Modal } from "@web3modal/standalone";
 import { RELAYER_EVENTS } from "@walletconnect/core";
 import toast from "react-hot-toast";
 
-import { PublicKey } from "@solana/web3.js";
 import {
   createContext,
   ReactNode,
@@ -18,17 +17,15 @@ import {
 
 import { getAppMetadata, getSdkError } from "@walletconnect/utils";
 import {
-  DEFAULT_APP_METADATA,
   DEFAULT_LOGGER,
   DEFAULT_PROJECT_ID,
   DEFAULT_RELAY_URL,
 } from "../constants";
-import { AccountBalances, apiGetAccountBalance } from "../helpers";
+import { AccountBalances } from "../helpers";
 import {
   getOptionalNamespaces,
   getRequiredNamespaces,
 } from "../helpers/namespaces";
-import { getPublicKeysFromAccounts } from "../helpers/solana";
 
 /**
  * Types
@@ -43,7 +40,6 @@ interface IContext {
   relayerRegion: string;
   pairings: PairingTypes.Struct[];
   accounts: string[];
-  solanaPublicKeys?: Record<string, PublicKey>;
   balances: AccountBalances;
   isFetchingBalances: boolean;
   setChains: any;
@@ -83,8 +79,7 @@ export function ClientContextProvider({
 
   const [balances, setBalances] = useState<AccountBalances>({});
   const [accounts, setAccounts] = useState<string[]>([]);
-  const [solanaPublicKeys, setSolanaPublicKeys] =
-    useState<Record<string, PublicKey>>();
+
   const [chains, setChains] = useState<string[]>([]);
   const [relayerRegion, setRelayerRegion] = useState<string>(
     DEFAULT_RELAY_URL!
@@ -103,10 +98,7 @@ export function ClientContextProvider({
     try {
       const arr = await Promise.all(
         _accounts.map(async (account) => {
-          const [namespace, reference, address] = account.split(":");
-          const chainId = `${namespace}:${reference}`;
-          const assets = await apiGetAccountBalance(address, chainId);
-
+          const assets = { balance: "", symbol: "", name: "" };
           return { account, assets: [assets] };
         })
       );
@@ -133,7 +125,6 @@ export function ClientContextProvider({
       setSession(_session);
       setChains(allNamespaceChains);
       setAccounts(allNamespaceAccounts);
-      setSolanaPublicKeys(getPublicKeysFromAccounts(allNamespaceAccounts));
 
       await getAccountBalances(allNamespaceAccounts);
     },
@@ -163,6 +154,8 @@ export function ClientContextProvider({
           optionalNamespaces,
         });
 
+        console.log({ uri, approval });
+
         // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
         if (uri) {
           // Create a flat array of all requested chains across namespaces.
@@ -170,6 +163,7 @@ export function ClientContextProvider({
             .map((namespace) => namespace.chains)
             .flat() as string[];
 
+          console.log({ standaloneChains });
           web3Modal.openModal({ uri, standaloneChains });
         }
 
@@ -365,7 +359,6 @@ export function ClientContextProvider({
       balances,
       isFetchingBalances,
       accounts,
-      solanaPublicKeys,
       chains,
       relayerRegion,
       client,
@@ -382,7 +375,6 @@ export function ClientContextProvider({
       balances,
       isFetchingBalances,
       accounts,
-      solanaPublicKeys,
       chains,
       relayerRegion,
       client,
